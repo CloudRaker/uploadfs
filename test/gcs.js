@@ -156,6 +156,9 @@ describe('UploadFS GCS', function () {
             assert(res.statusCode === 200, `Request status 200 != ${res.statusCode}`);
             /* @@TODO we should test the correctness of uploaded images */
 
+            assert(res.headers['content-encoding'] !== 'gzip', 'Is gzip encoded');
+            assert(res.headers['x-goog-stored-content-encoding'] !== 'gzip', 'Is gzip encoded');
+
             // clean up
             uploadfs.remove(path, e => {
               assert(!e, 'Remove uploaded file after testing');
